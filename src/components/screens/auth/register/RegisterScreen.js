@@ -2,8 +2,14 @@ import React from 'react';
 import {Form, Button} from 'react-bootstrap';
 import {useForm} from '../../../../hooks/useForm';
 import validator from 'validator'
+import { useDispatch, useSelector } from 'react-redux';
+import { removeError, setError } from '../../../../actions/ui';
+import { startRegisterWithEmailPasswordName } from '../../../../actions/auth';
 
 export const RegisterScreen = () => {
+
+  const dispatch = useDispatch();
+  const {msgError} = useSelector(error => error.ui)
 
    const [formValues, handleSubmit] = useForm({
      name: "Leandro",
@@ -18,7 +24,7 @@ export const RegisterScreen = () => {
      e.preventDefault()
     
     if(isFormValid()){
-      console.log("formulario correcto");
+      dispatch(startRegisterWithEmailPasswordName(email, password, name))
     }
 
    }
@@ -26,15 +32,16 @@ export const RegisterScreen = () => {
    const isFormValid = () => {
 
     if(name.trim().length === 0){
-      console.log("ingresar nombre");
+      dispatch(setError("ingresar nombre"))
       return false
     }else if(!validator.isEmail(email)){
-      console.log("email incorrecto");
+      dispatch(setError("email incorrecto"))
       return false
     }else if(!password === password2 || password.length < 5){
-      console.log("el password debe tener mas de 5 carateres")
+      dispatch(setError("el password debe tener mas de 5 carateres"))
       return false
     }
+    dispatch(removeError())
       return true
    }
 
@@ -42,9 +49,14 @@ export const RegisterScreen = () => {
         <div>
             <h1>formulario de Registro de usuario</h1>
             <Form onSubmit={handleRegister}>
-              <div className="alert">
-                  error
-              </div>
+             {
+               msgError &&
+                <div className="alert">
+                      {msgError}
+                </div>
+               }
+              
+             
             <Form.Group className="mb-3" controlId="formBasicEmail">
                 <Form.Label>Name</Form.Label>
                   <Form.Control type="text" placeholder="Enter email" name="name" value={name} onChange={handleSubmit} />
