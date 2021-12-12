@@ -1,12 +1,14 @@
 import React from 'react';
 import {Form, Button} from 'react-bootstrap';
-import { useDispatch } from 'react-redux';
+import { useDispatch, useSelector } from 'react-redux';
 import { startGoogleLogin, startLoginEmailPassword } from '../../../../actions/auth';
 import { useForm } from '../../../../hooks/useForm';
 
 export const LoginScreen = () => {
 
   const dispatch = useDispatch()
+
+  const {loading} = useSelector(state => state.ui)
 
   const [formValues, handleInputChange] = useForm({
     email: 'leandro@gmail.com',
@@ -39,7 +41,7 @@ const handleGoogleLogin = () => {
               <Form.Group className="mb-3" controlId="formBasicCheckbox">
                 <Form.Check type="checkbox" label="Check me out" />
               </Form.Group>
-                <Button variant="primary" type="submit">Submit</Button>
+                <Button variant="primary" type="submit" disabled={loading}>Login</Button>
 
                 <Button variant="danger" onClick={handleGoogleLogin}>GOOGLE SESION</Button>
             </Form>
