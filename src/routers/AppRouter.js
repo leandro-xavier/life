@@ -7,6 +7,7 @@ import { RegisterScreen } from '../components/screens/auth/register/RegisterScre
 import { DashboardScreen } from '../components/screens/dashboard/DashboardScreen';
 import { useDispatch } from 'react-redux';
 import { login } from '../actions/auth';
+import { AllPicture } from '../components/screens/allPicture.js/AllPicture';
 
 export const AppRouter = () => {
 
@@ -45,8 +46,8 @@ export const AppRouter = () => {
                     <Route exact path="/auth/login" element={<LoginScreen/>} />
                     <Route exact path="/auth/register" element={<RegisterScreen/>}/>
 
-                    <Route exact path="/" element={<DashboardScreen/>}/>
-                    <Route path="/" />
+                    <Route exact path="/dashboard" element={<DashboardScreen/>}/>
+                    <Route exact path="/" element={<AllPicture/>} />
                 </Routes>
                     
             </Router>
