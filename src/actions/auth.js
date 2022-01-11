@@ -47,18 +47,21 @@ export const startGoogleLogin = () => {
         signInWithPopup(auth, googleAuthProvider)
             .then(({ user }) => {
                 dispatch(
-                    login(user.uid, user.displayName)
+                    login(user.uid, user.displayName, user.photoURL)
                 )
+                console.log(user);
             })
+
     }
 }
 
-export const login = (uid, displayName) => {
+export const login = (uid, displayName, photoURL) => {
     return {
         type: types.login,
         payload: {
             uid,
-            displayName
+            displayName,
+            photoURL
         }
     }
 }

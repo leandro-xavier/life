@@ -1,19 +1,23 @@
 import React, { useEffect, useState } from 'react';
 import { getAuth} from 'firebase/auth';
-import { BrowserRouter as Router, Routes, Route,} from 'react-router-dom';
+import { BrowserRouter as Router,
+    Switch,
+    Redirect} from 'react-router-dom';
 import { Navigation } from '../components/components/Navigation/Navigation';
-import { LoginScreen } from '../components/screens/auth/login/LoginScreen';
-import { RegisterScreen } from '../components/screens/auth/register/RegisterScreen';
 import { DashboardScreen } from '../components/screens/dashboard/DashboardScreen';
 import { useDispatch } from 'react-redux';
 import { login } from '../actions/auth';
-import { AllPicture } from '../components/screens/allPicture.js/AllPicture';
+import { AllPicture } from '../components/screens/allPicture/AllPicture';
+import { PublicRoute } from './PublicRoute';
+import { LoginScreen } from '../components/screens/auth/login/LoginScreen';
+import { RegisterScreen } from '../components/screens/auth/register/RegisterScreen';
+import { PrivateRoute } from './PrivateRoute';
 
 export const AppRouter = () => {
 
     const dispatch = useDispatch()
 
-    const [checking, setChecking] = useState(true);
+   const [checking, setChecking] = useState(true);
 
     const [isLoggedIn, setIsLoggedIn] = useState(false);
 
@@ -39,18 +43,20 @@ export const AppRouter = () => {
     }
 
     return (
-        <div>
             <Router>
-                <Navigation/>
-                <Routes>
-                    <Route exact path="/auth/login" element={<LoginScreen/>} />
-                    <Route exact path="/auth/register" element={<RegisterScreen/>}/>
-
-                    <Route exact path="/dashboard" element={<DashboardScreen/>}/>
-                    <Route exact path="/" element={<AllPicture/>} />
-                </Routes>
+                <div>
+          <Navigation/>
+                <Switch>
+                    <PublicRoute path="/auth/login" isAuthenticated={isLoggedIn} component={LoginScreen}/>
+                    <PublicRoute path="/auth/register" isAuthenticated={isLoggedIn} component={RegisterScreen}/>
                     
+                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="/dashboard" component={DashboardScreen}/>
+                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="/" component={AllPicture} />
+
+                    <Redirect to="/auth/login"/>
+                </Switch>
+                </div>
             </Router>
-        </div>
+        
     )
 }

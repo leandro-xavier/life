@@ -9,8 +9,6 @@ export const PrivateRoute = ({
 
 }) => {
 
-    localStorage.setItem('lastPast', rest.location.pathname);
-
     return ( <
         Route {...rest }
         component = {
@@ -18,7 +16,7 @@ export const PrivateRoute = ({
                 (isAuthenticated) ?
                 < Component {...props }
                 /> :
-                ( < Redirect to = "/login" / > )
+                ( < Redirect to = "/auth/login" / > )
             )
         }
         />

@@ -7,4 +7,12 @@ export const types = {
 
     uiStartLoading: '[UI] Start loading',
     uiFinishLoading: '[UI] Finish loading',
+
+    productsAddNew: '[Products] New product',
+    productsActive: '[Products] Set active product',
+    productsLoad: '[Products] Load products',
+    poductsUpdated: '[Products] Updated product',
+    productsFileUrl: '[Products] Updated image url',
+    productsDelete: '[Products] Delete product',
+    productsLogoutCleaning: '[Products] Logout Cleaning'
 }

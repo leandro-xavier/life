@@ -6,12 +6,12 @@ import { getFirestore } from 'firebase/firestore';
 import { GoogleAuthProvider } from 'firebase/auth';
 
 const firebaseConfig = {
-    apiKey: "AIzaSyBR38_vSR2xR21BCg3nuzJDhYHY4RRkOB0",
-    authDomain: "react-app-maps-dfab2.firebaseapp.com",
-    projectId: "react-app-maps-dfab2",
-    storageBucket: "react-app-maps-dfab2.appspot.com",
-    messagingSenderId: "239439232497",
-    appId: "1:239439232497:web:9a8924c49ee4bdf64b9850"
+    apiKey: "AIzaSyCCZRsw1BIsqk_UTBr-4RuOHOl7z4q03Rk",
+    authDomain: "lifeapp-db6db.firebaseapp.com",
+    projectId: "lifeapp-db6db",
+    storageBucket: "lifeapp-db6db.appspot.com",
+    messagingSenderId: "815973988506",
+    appId: "1:815973988506:web:2dd1f5b7bf1c48ab540723"
 };
 
 // Initialize Firebase
