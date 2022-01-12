@@ -12,6 +12,7 @@ import { PublicRoute } from './PublicRoute';
 import { LoginScreen } from '../components/screens/auth/login/LoginScreen';
 import { RegisterScreen } from '../components/screens/auth/register/RegisterScreen';
 import { PrivateRoute } from './PrivateRoute';
+import { startLoadingProducts } from '../actions/product';
 
 export const AppRouter = () => {
 
@@ -28,6 +29,7 @@ export const AppRouter = () => {
             if(user?.uid){
                 dispatch(login(user.uid, user.displayName))
                 setIsLoggedIn(true)
+                dispatch(startLoadingProducts(user.uid))
             }else{
                 setIsLoggedIn(false)
             }

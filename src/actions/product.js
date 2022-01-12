@@ -1,32 +1,29 @@
 import Swal from "sweetalert2";
+import { collection, addDoc } from 'firebase/firestore'
 import { db } from "../firebase/firebase-config";
 import { fileUpload } from "../helpers/fileUpload";
 import { loadProduct } from "../helpers/loadProduct";
 import { types } from "../types/types";
 
 
-
-export const startNewProduct = () => {
+export const startNewProductNewVersion = (values) => {
     return async(dispatch, getState) => {
-        const { uid } = getState().auth; //agarra el uid del state para sumarlo al collecion de firestore
-        const newProduct = { //la nota que se quiere guardar
-            title: '',
-            description: '',
-            likes: '',
-            comment: '',
-            date: new Date().getTime()
-        }
+        const { uid } = getState().auth;
 
-        const doc = await db.collection(`${uid}/life/product`).add(newProduct) //guardar en la base de datos
-        console.log(doc);
-        // dispatch(activeProduct(doc.id, newProduct))
-        //dispatch(addNewProduct(doc.id, newProduct));
+        try {
+            const docRef = await addDoc(collection(db, `${uid}/life/product`), values)
+            dispatch(activeProduct(docRef.id, values))
+            dispatch(addNewProduct(docRef.id, values));
+
+            console.log("document", docRef);
+            Swal.fire('Good job!', 'You clicked the button!', 'success')
+
+        } catch (error) {
+            console.log(error);
+        }
     }
 }
 
-
-
-/*
 export const activeProduct = (id, product) => ({
     type: types.productsActive,
     payload: {
@@ -51,76 +48,77 @@ export const startLoadingProducts = (uid) => {
 }
 
 export const setProduct = (products) => ({
-    type: types.productsLoad,
-    payload: products
-})
+        type: types.productsLoad,
+        payload: products
+    })
+    /*
+    export const startSaveProducts = (product) => {
+        return async(dispatch, getState) => {
 
-export const startSaveProducts = (product) => {
-    return async(dispatch, getState) => {
+            const { uid } = getState().auth;
 
-        const { uid } = getState().auth;
+            const { id, url = null, ...productWithinId } = product
 
-        const { id, url = null, ...productWithinId } = product
+            await db.doc(`${uid}/life/product/${product.id}`).update({
+                url,
+                ...productWithinId
+            })
 
-        await db.doc(`${uid}/life/product/${product.id}`).update({
-            url,
-            ...productWithinId
-        })
-
-        dispatch(refreshProduct(product.id, productWithinId))
-        Swal.fire('Saved', product.title, 'success')
-    }
-}
-
-export const refreshProduct = (id, product) => ({
-    type: types.productsUpdated,
-    payload: {
-        id,
-        product: {
-            id,
-            ...product
+            dispatch(refreshProduct(product.id, productWithinId))
+            Swal.fire('Saved', product.title, 'success')
         }
     }
-})
 
-export const startUploading = (file) => {
-    return async(dispatch, getState) => {
-        const { active: activeProduct } = getState().products;
-
-        Swal.fire({
-            title: 'Uploading',
-            text: 'Please wait',
-            allowOutsideClick: 'false',
-            onBeforeOpen: () => {
-                Swal.showLoading();
+    export const refreshProduct = (id, product) => ({
+        type: types.productsUpdated,
+        payload: {
+            id,
+            product: {
+                id,
+                ...product
             }
-        })
+        }
+    })
+    */
+export const startUploading = (file) => {
+        return async(dispatch, getState) => {
+            const { active: activeProduct } = getState().products;
 
-        const fileUrl = await fileUpload(file)
+            Swal.fire({
+                title: 'Uploading',
+                text: 'Please wait',
+                allowOutsideClick: 'false',
+                onBeforeOpen: () => {
+                    Swal.showLoading();
+                }
+            })
 
-        activeProduct.url = fileUrl;
+            const fileUrl = await fileUpload(file)
 
-        dispatch(startSaveProducts(activeProduct))
+            console.log(fileUrl);
+            // activeProduct.url = fileUrl;
 
-        Swal.close()
+            //  dispatch(startSaveProducts(activeProduct))
+
+            Swal.close()
+        }
     }
-}
+    /*
+    export const startDeleting = (id) => {
+        return async(dispatch, getState) => {
+            const uid = getState().auth.uid;
+            await db.doc(`${uid}/life/product/${id}`).delete();
 
-export const startDeleting = (id) => {
-    return async(dispatch, getState) => {
-        const uid = getState().auth.uid;
-        await db.doc(`${uid}/life/product/${id}`).delete();
-
-        dispatch(deleteProduct(id));
+            dispatch(deleteProduct(id));
+        }
     }
-}
 
-export const deleteProduct = (id) => ({
-    type: types.productsDelete,
-    payload: id
-})
+    export const deleteProduct = (id) => ({
+        type: types.productsDelete,
+        payload: id
+    })
 
-export const productLogout = () => ({
-    type: types.productsLogoutCleaning,
-})
-*/
+    export const productLogout = () => ({
+        type: types.productsLogoutCleaning,
+    })
+    */

@@ -1,8 +1,9 @@
+import { collection, getDocs } from 'firebase/firestore';
 import { db } from '../firebase/firebase-config';
 
 export const loadProduct = async(uid) => {
 
-    const productsSnap = await db.collection(`${uid}/life/products`).get();
+    const productsSnap = await getDocs(collection(db, `${uid}/life/product`));
 
     const products = [];
 
@@ -11,6 +12,7 @@ export const loadProduct = async(uid) => {
             id: snapHijo.id,
             ...snapHijo.data()
         })
+        console.log(products);
     })
 
     return products;
