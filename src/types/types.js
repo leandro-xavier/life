@@ -14,5 +14,6 @@ export const types = {
     poductsUpdated: '[Products] Updated product',
     productsFileUrl: '[Products] Updated image url',
     productsDelete: '[Products] Delete product',
-    productsLogoutCleaning: '[Products] Logout Cleaning'
+    productsLogoutCleaning: '[Products] Logout Cleaning',
+    addUrl: '[Products] Add Url'
 }

@@ -1,6 +1,7 @@
 import React from 'react';
-import {Card, Button} from 'react-bootstrap';
+import {Card, Button, Form, FormControl} from 'react-bootstrap';
 import { useSelector } from 'react-redux';
+import './allpicture.css'
 
 export const AllPicture = () => {
 
@@ -8,19 +9,37 @@ export const AllPicture = () => {
 
     return (
         <div>
-            {
+            <div className='header'>
+                <h1 className='h1'>LIFE</h1>
+            </div>
+            <div className='buscador'>
+                <Form className="d-flex form">
+                <Button variant="outline-danger boton">Search</Button>
+                    <FormControl
+                    type="search"
+                    placeholder="Search"
+                    className="me-2"
+                    aria-label="Search"
+                    />
+                </Form>
+            </div>
+
+            <div className='cards'>
+                {
                 products.map(dato => (
-                <Card style={{ width: '18rem' }}>
-                    <Card.Img variant="top" src="holder.js/100px180" />
+                <Card className='card'>
+                    <Card.Title className="titulo">{dato.title}</Card.Title>
                     <Card.Body>
-                        <Card.Title>{dato.title}</Card.Title>
+                    <Card.Img variant="top" src={dato.url} />
+                    
                         <Card.Text>{dato.description}</Card.Text>
-                        <Button variant="primary">Go somewhere</Button>
+                        <Button className='boton-dos' variant="secondary">imagen</Button>
                     </Card.Body>
-            </Card>
+                </Card>
                 ))
                 
-            }
+                }
+            </div>
             
         </div>
     )

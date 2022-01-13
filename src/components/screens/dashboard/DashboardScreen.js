@@ -1,9 +1,11 @@
-import React from 'react';
+import React,{useState} from 'react';
+import {Button, Offcanvas} from 'react-bootstrap';
 import {useDispatch, useSelector} from 'react-redux'
 import { startLogout } from '../../../actions/auth';
 import { ImaUpload } from '../Product/ImaUpload';
 import { ListMyProduct } from '../Product/ListMyProduct';
 import { Figure } from 'react-bootstrap';
+import './dashboard.css'
 
 export const DashboardScreen = () => {
 
@@ -11,6 +13,9 @@ export const DashboardScreen = () => {
   
     const {name, photoURL} = useSelector(state => state.auth);
 
+    const [show, setShow] = useState(false);
+    const handleClose = () => setShow(false);
+    const handleShow = () => setShow(true);
 
     const handleLogout = () => {
         dispatch(startLogout())
@@ -18,24 +23,32 @@ export const DashboardScreen = () => {
 
 
     return (
-        <div>
-            <h1>contenido de usuario</h1>
-            <div className='container'>
-            <Figure><Figure.Image width={110} height={110} alt="171x180" src={photoURL}/></Figure>
-                <h3 className='md-4'>nombre: {name}</h3>
+        <div className='container'>
+            <h1 className='h1'>Profile</h1>
+            <Button variant="dark" onClick={handleShow}>
+            <i className="fas fa-chevron-circle-down icon"></i>
+            </Button>
+            <div className='container-1'>
+            <Figure><Figure.Image  className='figure' width={150} height={150} alt="171x180" src={photoURL}/></Figure>
             </div>
+            <h3 className='md-4 h3'>{name}</h3>
             <div>
-                <ul>
-                    <li><ListMyProduct/></li>
-                </ul>
-            </div>
-            <div>
-                <ImaUpload/>
+                <ListMyProduct/>     
             </div>
 
-            <button className='btn btn-danger' onClick={handleLogout}>
-                logout
-            </button>
+            <Offcanvas show={show} onHide={handleClose}>
+                <Offcanvas.Header closeButton>
+                <Offcanvas.Title>Menu</Offcanvas.Title>
+                </Offcanvas.Header>
+                    <Offcanvas.Body>
+                    <Button variant="danger" onClick={handleLogout}>
+                     logout
+                    </Button>
+                    <div>
+                        <ImaUpload/>
+                </div>
+                    </Offcanvas.Body>
+            </Offcanvas>
         </div>
     )
 }

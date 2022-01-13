@@ -5,6 +5,8 @@ import validator from 'validator'
 import { useDispatch, useSelector } from 'react-redux';
 import { removeError, setError } from '../../../../actions/ui';
 import { startRegisterWithEmailPasswordName } from '../../../../actions/auth';
+import './register.css';
+import Swal from 'sweetalert2';
 
 export const RegisterScreen = () => {
 
@@ -12,10 +14,10 @@ export const RegisterScreen = () => {
   const {msgError} = useSelector(error => error.ui)
 
    const [formValues, handleSubmit] = useForm({
-     name: "Leandro",
-     email: "leandro@gmail.com",
-     password: "123456",
-     password2: "123456"
+     name: "",
+     email: "",
+     password: "",
+     password2: ""
    })
 
    const {name, email, password, password2} = formValues;
@@ -33,12 +35,15 @@ export const RegisterScreen = () => {
 
     if(name.trim().length === 0){
       dispatch(setError("ingresar nombre"))
+      Swal.fire('Error', "Debes ingresar un nombre", "error")
       return false
     }else if(!validator.isEmail(email)){
       dispatch(setError("email incorrecto"))
+      Swal.fire('Error', "email incorrecto", "error")
       return false
     }else if(!password === password2 || password.length < 5){
       dispatch(setError("el password debe tener mas de 5 carateres"))
+      Swal.fire('Error', "el password debe tener mas de 5 carateres", "error")
       return false
     }
     dispatch(removeError())
@@ -46,39 +51,26 @@ export const RegisterScreen = () => {
    }
 
     return (
-        <div>
-            <h1>formulario de Registro de usuario</h1>
-            <Form onSubmit={handleRegister}>
-             {
-               msgError &&
-                <div className="alert">
-                      {msgError}
-                </div>
-               }
-              
-             
+        <div className='container-1'>
+            <Form className="container-2" onSubmit={handleRegister}>
+              <h1>Register</h1>
             <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Name</Form.Label>
-                  <Form.Control type="text" placeholder="Enter email" name="name" value={name} onChange={handleSubmit} />
+                  <Form.Control type="text" placeholder="Enter name" name="name" value={name} onChange={handleSubmit} />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicEmail">
-                <Form.Label>Email address</Form.Label>
                   <Form.Control type="email" placeholder="Enter email" name="email" value={email} onChange={handleSubmit} />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password</Form.Label>
                   <Form.Control type="password" placeholder="Password" name="password" value={password} onChange={handleSubmit} />
               </Form.Group>
               <Form.Group className="mb-3" controlId="formBasicPassword">
-                <Form.Label>Password2</Form.Label>
-                  <Form.Control type="password" placeholder="Password" name="password2" value={password2} onChange={handleSubmit} />
+                  <Form.Control type="password" placeholder="Repeat Password" name="password2" value={password2} onChange={handleSubmit} />
               </Form.Group>
-              <Form.Group className="mb-3" controlId="formBasicCheckbox">
-                <Form.Check type="checkbox" label="Check me out" />
-              </Form.Group>
-                <Button variant="primary" type="submit">
-                  Submit
-                </Button>
+              <Button variant="secondary" type="submit">
+                  Registro
+              </Button>
+             
+                
             </Form>
         </div>
     )

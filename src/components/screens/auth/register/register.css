@@ -1,0 +1,12 @@
+.container-1 {
+    text-align: center;
+}
+
+.container-2 {
+    width: 350px;
+    margin: 20px;
+    padding: 50px;
+    background-color: #1B2631;
+    color: white;
+    border-radius: 15px;
+}

@@ -1,0 +1,51 @@
+.header {
+    width: 100%;
+    height: 100px;
+    margin: auto;
+    padding: 20px;
+}
+
+.buscador {
+    display: inline-block;
+    text-align: center;
+    align-items: center;
+    width: 100%;
+    height: 100px;
+}
+
+.form {
+    width: 500px;
+    margin: auto;
+    padding: 30px;
+}
+
+.boton {
+    margin-right: 50px;
+}
+
+.cards {
+    display: flex;
+    flex-direction: column;
+    flex-wrap: wrap;
+    justify-content: center;
+}
+
+.card {
+    width: 500px;
+    margin: 10px;
+    margin: auto;
+    align-content: space-between;
+    text-align: center;
+}
+
+.boton-dos {
+    width: 100%;
+}
+
+.titulo {
+    background-color: #1B2631;
+    height: 50px;
+    color: white;
+    padding-top: 10px;
+    border-radius: 5px;
+}

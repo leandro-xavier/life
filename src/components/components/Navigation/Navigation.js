@@ -7,11 +7,11 @@ export const Navigation = () => {
         <div>
             <Navbar collapseOnSelect expand="lg" bg="dark" variant="dark">
               <Container>
-                <Navbar.Brand as={Link} to="/">Life Aplication</Navbar.Brand>
+                <Navbar.Brand as={Link} to="/">Life</Navbar.Brand>
                   <Navbar.Toggle aria-controls="responsive-navbar-nav" />
                   <Navbar.Collapse id="responsive-navbar-nav">
                     <Nav className="me-auto">
-                      <Nav.Link as={Link} to="/">Aplicacion</Nav.Link>
+                      <Nav.Link as={Link} to="/">explore</Nav.Link>
                       <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
                     </Nav>
                     <Nav>

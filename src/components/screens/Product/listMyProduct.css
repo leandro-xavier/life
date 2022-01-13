@@ -1,0 +1,14 @@
+.card-my {
+    display: flex;
+    flex-direction: row;
+    flex-wrap: nowrap;
+    justify-content: space-between;
+    text-align: center;
+    border: solid black 1px;
+    width: 8rem;
+}
+
+.card-ima {
+    width: 80px;
+    height: 180px;
+}

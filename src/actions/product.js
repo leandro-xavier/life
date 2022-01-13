@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { collection, addDoc } from 'firebase/firestore'
+import { collection, addDoc, doc, updateDoc, deleteField, deleteDoc } from 'firebase/firestore'
 import { db } from "../firebase/firebase-config";
 import { fileUpload } from "../helpers/fileUpload";
 import { loadProduct } from "../helpers/loadProduct";
@@ -9,11 +9,22 @@ import { types } from "../types/types";
 export const startNewProductNewVersion = (values) => {
     return async(dispatch, getState) => {
         const { uid } = getState().auth;
+        const { url } = getState().products;
+        const { title, description } = values
+        console.log(url);
+
+        const allProduct = {
+            title: title,
+            description: description,
+            url: url
+
+        }
 
         try {
-            const docRef = await addDoc(collection(db, `${uid}/life/product`), values)
-            dispatch(activeProduct(docRef.id, values))
-            dispatch(addNewProduct(docRef.id, values));
+            const docRef = await addDoc(collection(db, `${uid}/life/product`), allProduct)
+            dispatch(activeProduct(docRef.id, title, description))
+            dispatch(addNewProduct(docRef.id, allProduct));
+
 
             console.log("document", docRef);
             Swal.fire('Good job!', 'You clicked the button!', 'success')
@@ -24,11 +35,12 @@ export const startNewProductNewVersion = (values) => {
     }
 }
 
-export const activeProduct = (id, product) => ({
+export const activeProduct = (id, title, description) => ({
     type: types.productsActive,
     payload: {
         id,
-        ...product
+        title,
+        description
     }
 })
 
@@ -81,44 +93,51 @@ export const setProduct = (products) => ({
     })
     */
 export const startUploading = (file) => {
-        return async(dispatch, getState) => {
-            const { active: activeProduct } = getState().products;
+    return async(dispatch, getState) => {
+        const { active: activeProduct } = getState().products;
+        const { uid } = getState().auth;
+        Swal.fire({
+            title: 'Uploading',
+            text: 'Please wait',
+            allowOutsideClick: 'false',
+            onBeforeOpen: () => {
+                Swal.showLoading();
+            }
+        })
 
-            Swal.fire({
-                title: 'Uploading',
-                text: 'Please wait',
-                allowOutsideClick: 'false',
-                onBeforeOpen: () => {
-                    Swal.showLoading();
-                }
-            })
+        const fileUrl = await fileUpload(file)
 
-            const fileUrl = await fileUpload(file)
+        console.log(fileUrl);
+        //activeProduct.url = fileUrl;
+        // console.log(activeProduct.url);
+        dispatch(addUrl(fileUrl))
 
-            console.log(fileUrl);
-            // activeProduct.url = fileUrl;
-
-            //  dispatch(startSaveProducts(activeProduct))
-
-            Swal.close()
-        }
+        Swal.close()
     }
-    /*
-    export const startDeleting = (id) => {
-        return async(dispatch, getState) => {
-            const uid = getState().auth.uid;
-            await db.doc(`${uid}/life/product/${id}`).delete();
+}
 
-            dispatch(deleteProduct(id));
-        }
+export const startDeleting = (id) => {
+    return async(dispatch, getState) => {
+        const uid = getState().auth.uid;
+
+        await deleteDoc(db, `${uid}/life/product/${id}`)
+
+
+        dispatch(deleteProduct(id));
     }
+}
 
-    export const deleteProduct = (id) => ({
-        type: types.productsDelete,
-        payload: id
-    })
+export const deleteProduct = (id) => ({
+    type: types.productsDelete,
+    payload: id
+})
 
-    export const productLogout = () => ({
-        type: types.productsLogoutCleaning,
-    })
-    */
+export const productLogout = () => ({
+    type: types.productsLogoutCleaning,
+})
+
+
+export const addUrl = (url) => ({
+    type: types.addUrl,
+    payload: url
+})
