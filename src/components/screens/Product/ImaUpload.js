@@ -35,7 +35,7 @@ export const ImaUpload = () => {
     return (
         <>
         
-            <Button variant="success" onClick={handleShow }><i className="fas fa-upload data"></i></Button>
+            <Button className='boton' variant="success" onClick={handleShow }><i className="fas fa-upload data"></i></Button>
                 <Modal show={show} onHide={handleClose} animation={false}>
                     <Modal.Header closeButton>
                         <Modal.Title>Sube tu imagen</Modal.Title>

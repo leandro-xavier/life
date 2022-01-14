@@ -1,0 +1,19 @@
+.container-1 {}
+
+.card-my {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    text-align: center;
+    border: solid black 1px;
+    width: 28rem;
+}
+
+.card-ima {
+    width: 300px;
+    height: 250px;
+}
+
+.boton {
+    width: 100%;
+}

@@ -8,7 +8,7 @@ export const ListMyProduct = () => {
     const {products} = useSelector(state => state.products);
  
     return (
-        <div className="pointer container-1" >
+        <div className="pointer" >
             {
                 products.map(dato => (
                     <ListOneProduct

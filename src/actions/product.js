@@ -149,15 +149,21 @@ export const startUpdateProduct = (product) => {
 
         const { uid } = getState().auth;
 
-        const { id, url = null, ...productWithinId } = product
+        if (!product.url) {
+            delete product.url;
+        }
 
-        await db.doc(`${uid}/life/product/${product.id}`).update({
-            url,
-            ...productWithinId
-        })
+        // const productToFirestore = {...product };
+        //delete productToFirestore.id;
 
-        dispatch(refreshProduct(product.id, productWithinId))
-        Swal.fire('Saved', product.title, 'success')
+        console.log(product.id);
+
+        const upIma = doc(db, `${uid}/life/product/${product.id}`);
+
+        await updateDoc(upIma, product)
+
+        //  dispatch(refreshProduct(product.id, productWithinId))
+        //  Swal.fire('Saved', product.title, 'success')
     }
 }
 

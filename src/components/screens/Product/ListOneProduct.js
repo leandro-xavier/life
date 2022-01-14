@@ -4,6 +4,7 @@ import { useSelector } from 'react-redux';
 import {Card, Button} from 'react-bootstrap';
 import { activeProduct, startDeleting, startUpdateProduct } from '../../../actions/product';
 import { ImaUpdate } from './ImaUpdate';
+import './listoneproduct.css'
 
 export const ListOneProduct = ({id, description, title , url}) => {
 
@@ -22,13 +23,13 @@ export const ListOneProduct = ({id, description, title , url}) => {
  }
 
     return (
-        <div onClick={handleEntryClick}>
+        <div onClick={handleEntryClick} className='container-1'>
                <Card className='card-my' key={id}>
                     <Card.Img className='card-ima' variant="top" src={url} />
                     <Card.Body>
                        <Card.Title>{title}</Card.Title>
                         <Card.Text>{description}</Card.Text>
-                        <Button variant='danger' onClick={handleDelete}>Delete</Button>
+                        <Button className='boton' variant='danger' onClick={handleDelete}><i className='fas fa-trash'></i></Button>
 
                         <ImaUpdate
                         id={id}
