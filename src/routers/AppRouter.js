@@ -50,17 +50,17 @@ export const AppRouter = () => {
     }
 
     return (
-            <Router>
+            <Router basename={process.env.PUBLIC_URL}>
                 <div>
           <Navigation isAuthenticated={isLoggedIn}/>
                 <Switch>
-                    <PublicRoute path="life/auth/login" isAuthenticated={isLoggedIn} component={LoginScreen}/>
-                    <PublicRoute path="life/auth/register" isAuthenticated={isLoggedIn} component={RegisterScreen}/>
+                    <PublicRoute path="/auth/login" isAuthenticated={isLoggedIn} component={LoginScreen}/>
+                    <PublicRoute path="/auth/register" isAuthenticated={isLoggedIn} component={RegisterScreen}/>
                     
-                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="life/dashboard" component={DashboardScreen}/>
-                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="life/" component={AllPicture} />
+                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="/dashboard" component={DashboardScreen}/>
+                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="/" component={AllPicture} />
 
-                    <Redirect to="life/auth/login"/>
+                    <Redirect to="/auth/login"/>
                 </Switch>
                 </div>
             </Router>
