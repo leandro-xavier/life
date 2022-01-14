@@ -54,13 +54,13 @@ export const AppRouter = () => {
                 <div>
           <Navigation isAuthenticated={isLoggedIn}/>
                 <Switch>
-                    <PublicRoute path="/auth/login" isAuthenticated={isLoggedIn} component={LoginScreen}/>
-                    <PublicRoute path="/auth/register" isAuthenticated={isLoggedIn} component={RegisterScreen}/>
+                    <PublicRoute path="life/auth/login" isAuthenticated={isLoggedIn} component={LoginScreen}/>
+                    <PublicRoute path="life/auth/register" isAuthenticated={isLoggedIn} component={RegisterScreen}/>
                     
-                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="/dashboard" component={DashboardScreen}/>
-                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="/" component={AllPicture} />
+                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="life/dashboard" component={DashboardScreen}/>
+                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="life/" component={AllPicture} />
 
-                    <Redirect to="/auth/login"/>
+                    <Redirect to="life/auth/login"/>
                 </Switch>
                 </div>
             </Router>
