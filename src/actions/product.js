@@ -4,6 +4,7 @@ import { db } from "../firebase/firebase-config";
 import { fileUpload } from "../helpers/fileUpload";
 import { loadProduct } from "../helpers/loadProduct";
 import { types } from "../types/types";
+import { loadAllProduct } from "../helpers/loadAllProduct";
 
 
 export const startNewProductNewVersion = (values) => {
@@ -22,7 +23,7 @@ export const startNewProductNewVersion = (values) => {
 
         try {
             const docRef = await addDoc(collection(db, `${uid}/life/product`), allProduct)
-            dispatch(activeProduct(docRef.id, title, description))
+            dispatch(activeProduct(docRef.id, allProduct))
             dispatch(addNewProduct(docRef.id, allProduct));
 
 
@@ -35,12 +36,11 @@ export const startNewProductNewVersion = (values) => {
     }
 }
 
-export const activeProduct = (id, title, description) => ({
+export const activeProduct = (id, products) => ({
     type: types.productsActive,
     payload: {
         id,
-        title,
-        description
+        ...products
     }
 })
 
@@ -65,20 +65,7 @@ export const setProduct = (products) => ({
     })
     /*
     export const startSaveProducts = (product) => {
-        return async(dispatch, getState) => {
-
-            const { uid } = getState().auth;
-
-            const { id, url = null, ...productWithinId } = product
-
-            await db.doc(`${uid}/life/product/${product.id}`).update({
-                url,
-                ...productWithinId
-            })
-
-            dispatch(refreshProduct(product.id, productWithinId))
-            Swal.fire('Saved', product.title, 'success')
-        }
+        
     }
 
     export const refreshProduct = (id, product) => ({
@@ -120,7 +107,7 @@ export const startDeleting = (id) => {
     return async(dispatch, getState) => {
         const uid = getState().auth.uid;
 
-        await deleteDoc(db, `${uid}/life/product/${id}`)
+        await deleteDoc(doc(db, uid, "life", "product", id))
 
 
         dispatch(deleteProduct(id));
@@ -140,4 +127,47 @@ export const productLogout = () => ({
 export const addUrl = (url) => ({
     type: types.addUrl,
     payload: url
+})
+
+
+//activar todas las notas
+
+export const startLoadingAllProducts = () => {
+    return async(dispatch) => {
+        const products = await loadAllProduct()
+        dispatch(setAllProduct(products))
+    }
+}
+
+export const setAllProduct = (products) => ({
+    type: types.productsAllLoad,
+    payload: products
+})
+
+export const startUpdateProduct = (product) => {
+    return async(dispatch, getState) => {
+
+        const { uid } = getState().auth;
+
+        const { id, url = null, ...productWithinId } = product
+
+        await db.doc(`${uid}/life/product/${product.id}`).update({
+            url,
+            ...productWithinId
+        })
+
+        dispatch(refreshProduct(product.id, productWithinId))
+        Swal.fire('Saved', product.title, 'success')
+    }
+}
+
+export const refreshProduct = (id, product) => ({
+    type: types.productsUpdated,
+    payload: {
+        id,
+        product: {
+            id,
+            ...product
+        }
+    }
 })

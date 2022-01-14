@@ -15,6 +15,7 @@ export const loadProduct = async(uid) => {
         console.log(products);
     })
 
+
     return products;
 
 }

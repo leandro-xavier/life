@@ -2,8 +2,9 @@ import { types } from "../types/types";
 
 const initialState = {
     products: [], // esto es lo que se va a mostrar el arreglo de notas
-    active: null,
-    url: ''
+    active: '',
+    url: '',
+    allProducts: []
 }
 export const productReducer = (state = initialState, action) => {
     switch (action.type) {
@@ -31,6 +32,11 @@ export const productReducer = (state = initialState, action) => {
             return {
                 ...state,
                 products: [...action.payload]
+            }
+        case types.productsAllLoad:
+            return {
+                ...state,
+                allProducts: [...action.payload]
             }
 
         case types.productsUpdated:

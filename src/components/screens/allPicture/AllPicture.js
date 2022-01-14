@@ -4,7 +4,7 @@ import { useSelector } from 'react-redux';
 import './allpicture.css'
 
 export const AllPicture = () => {
-
+    
     const {products} = useSelector(state => state.products)
 
     return (
