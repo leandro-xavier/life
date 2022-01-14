@@ -1,4 +1,5 @@
 import React, { useEffect, useState } from 'react';
+import { Spinner } from 'react-bootstrap';
 import { getAuth} from 'firebase/auth';
 import { BrowserRouter as Router,
     Switch,
@@ -28,7 +29,7 @@ export const AppRouter = () => {
 
         auth.onAuthStateChanged((user) => {
             if(user?.uid){
-                dispatch(login(user.uid, user.displayName))
+                dispatch(login(user.uid, user.displayName,user.photoURL))
                 setIsLoggedIn(true)
                 dispatch(startLoadingProducts(user.uid))
                 dispatch(startLoadingAllProducts())
@@ -42,7 +43,9 @@ export const AppRouter = () => {
 
     if(checking){
         return (
-            <h1>Espere...</h1>
+            <Spinner size="md" animation="border" role="status">
+                <span className="visually-hidden">Loading...</span>
+            </Spinner>
         )
     }
 

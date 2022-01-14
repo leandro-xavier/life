@@ -11,7 +11,7 @@ export const types = {
     productsAddNew: '[Products] New product',
     productsActive: '[Products] Set active product',
     productsLoad: '[Products] Load products',
-    poductsUpdated: '[Products] Updated product',
+    productsUpdated: '[Products] Updated product',
     productsFileUrl: '[Products] Updated image url',
     productsDelete: '[Products] Delete product',
     productsLogoutCleaning: '[Products] Logout Cleaning',

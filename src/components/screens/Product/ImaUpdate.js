@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import { useRef } from 'react';
 import { useEffect } from 'react';
 import { Button, Modal, Form, } from 'react-bootstrap';
 import { useSelector } from 'react-redux';
@@ -16,24 +17,27 @@ export const ImaUpdate = () => {
    
     const handleClose = () => setShow(false);
     const handleShow = () => setShow(true);
-/*
-const initialState = {
-    title: active.title,
-    description: active.description,
-    url: active.url
-}
-*/
-//console.log(initialState);
-   const [formImaValues, handleInputUpdate] = useForm(active);
 
-    const {title, description, like, comment, file} = formImaValues;
+    
 
+   const [formImaValues, handleInputUpdate, reset] = useForm(active);
+
+    const {title, description} = formImaValues;
+
+    const activeId = useRef(active.id)
 
     const handleUpdate = (e) => {
         e.preventDefault()
         console.log(title, description)
     // dispatch(startUpdateProduct(formImaValues))
 }
+
+useEffect(() => {
+  if(active.id !== activeId.current){
+      reset(active);
+      activeId.current = active.id
+  }
+}, [active, reset])
 
 useEffect(() => {
     dispatch(activeProduct(formImaValues.id, {...formImaValues}))
@@ -56,7 +60,7 @@ const handleSave = () => {
 
                                 <Form.Group className="mb-3" controlId="formFile">
                                     <Form.Label>Imagen</Form.Label>
-                                  {/*<Form.Control type="file" placeholder="Enter" name='file' onChange={handleInputUpdate}/> */ } 
+                                 {/*<Form.Control type="file" placeholder="Enter" name='file' value={url} onChange={handleInputUpdate}/> */}
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicEm">

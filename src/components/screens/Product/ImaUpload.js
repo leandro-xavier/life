@@ -1,6 +1,6 @@
 import React, {  useState } from 'react';
 import { Modal, Button, Form} from 'react-bootstrap';
-import { useDispatch, useSelector } from 'react-redux';
+import { useDispatch} from 'react-redux';
 import { startNewProductNewVersion, startUploading } from '../../../actions/product';
 import { useForm } from '../../../hooks/useForm';
 import './imaUpload.css'
@@ -14,7 +14,7 @@ export const ImaUpload = () => {
 
     const [formValues, handleInputChange] = useForm({});
 
-    const {title, description, like, comment, file} = formValues;
+    const {title, description } = formValues;
 
    const handleSubmit = async(e) => {
        e.preventDefault()
@@ -52,20 +52,15 @@ export const ImaUpload = () => {
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
                                     <Form.Label>Titulo</Form.Label>
                                     <Form.Control type="text" placeholder="Enter title" name='title' value={title} onChange={handleInputChange}/>
-                                    <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                                    </Form.Text>
                                 </Form.Group>
 
                                 <Form.Group className="mb-3" controlId="formBasicEmail">
                                     <Form.Label>Descripcion</Form.Label>
-                                    <Form.Control type="text" placeholder="Enter title" name='description' value={description} onChange={handleInputChange}/>
-                                    <Form.Text className="text-muted">
-                                    We'll never share your email with anyone else.
-                                    </Form.Text>
+                                    <Form.Control type="text" placeholder="Enter description" name='description' value={description} onChange={handleInputChange}/>
+                            
                                 </Form.Group>
 
-                                <Button variant="primary" type="submit">
+                                <Button variant="secondary" type="submit">
                                     save
                                 </Button>
                     

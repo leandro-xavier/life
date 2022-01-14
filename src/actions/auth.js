@@ -1,6 +1,7 @@
 import { getAuth, signInWithPopup, createUserWithEmailAndPassword, signInWithEmailAndPassword, signOut } from 'firebase/auth';
 import { googleAuthProvider } from '../firebase/firebase-config';
 import { types } from "../types/types";
+import { productLogout } from './product';
 import { finishLoading, startLoading } from './ui';
 
 
@@ -71,6 +72,7 @@ export const startLogout = () => {
         const auth = getAuth()
         await signOut(auth)
         dispatch(logout())
+        dispatch(productLogout());
     }
 }
 

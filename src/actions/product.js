@@ -1,5 +1,5 @@
 import Swal from "sweetalert2";
-import { collection, addDoc, doc, updateDoc, deleteField, deleteDoc } from 'firebase/firestore'
+import { collection, addDoc, doc, updateDoc, deleteDoc } from 'firebase/firestore'
 import { db } from "../firebase/firebase-config";
 import { fileUpload } from "../helpers/fileUpload";
 import { loadProduct } from "../helpers/loadProduct";
@@ -28,7 +28,7 @@ export const startNewProductNewVersion = (values) => {
 
 
             console.log("document", docRef);
-            Swal.fire('Good job!', 'You clicked the button!', 'success')
+            Swal.fire('Excelente', 'Producto creado con éxito', 'success')
 
         } catch (error) {
             console.log(error);
@@ -60,25 +60,10 @@ export const startLoadingProducts = (uid) => {
 }
 
 export const setProduct = (products) => ({
-        type: types.productsLoad,
-        payload: products
-    })
-    /*
-    export const startSaveProducts = (product) => {
-        
-    }
+    type: types.productsLoad,
+    payload: products
+})
 
-    export const refreshProduct = (id, product) => ({
-        type: types.productsUpdated,
-        payload: {
-            id,
-            product: {
-                id,
-                ...product
-            }
-        }
-    })
-    */
 export const startUploading = (file) => {
     return async(dispatch, getState) => {
         const { active: activeProduct } = getState().products;
@@ -120,7 +105,7 @@ export const deleteProduct = (id) => ({
 })
 
 export const productLogout = () => ({
-    type: types.productsLogoutCleaning,
+    type: types.productsLogoutCleaning
 })
 
 
@@ -153,17 +138,18 @@ export const startUpdateProduct = (product) => {
             delete product.url;
         }
 
-        // const productToFirestore = {...product };
-        //delete productToFirestore.id;
+        const productToFirestore = {...product };
+        delete productToFirestore.id;
 
-        console.log(product.id);
+        console.log(productToFirestore);
 
         const upIma = doc(db, `${uid}/life/product/${product.id}`);
 
-        await updateDoc(upIma, product)
+        await updateDoc(upIma, productToFirestore)
+        Swal.fire('Success', "producto actualizado", "success")
 
-        //  dispatch(refreshProduct(product.id, productWithinId))
-        //  Swal.fire('Saved', product.title, 'success')
+        dispatch(refreshProduct(product.id, productToFirestore))
+            //  Swal.fire('Saved', product.title, 'success')
     }
 }
 

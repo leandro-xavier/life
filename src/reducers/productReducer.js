@@ -51,14 +51,14 @@ export const productReducer = (state = initialState, action) => {
         case types.productsDelete:
             return {
                 ...state,
-                active: null,
+                active: '',
                 products: state.products.filter(product => product !== action.payload)
             }
 
         case types.productsLogoutCleaning:
             return {
                 ...state,
-                active: null,
+                active: '',
                 products: []
             }
         default:
