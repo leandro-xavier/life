@@ -96,6 +96,8 @@ export const startDeleting = (id) => {
 
 
         dispatch(deleteProduct(id));
+
+        Swal.fire('Success', 'se elimino con exito', 'success')
     }
 }
 

@@ -41,8 +41,11 @@ useEffect(() => {
 
 useEffect(() => {
     dispatch(activeProduct(formImaValues.id, {...formImaValues}))
-}, [formImaValues, dispatch])
+}, [formImaValues, dispatch,])
 
+useEffect(() => {
+ handleSave()
+}, []);
 
 const handleSave = () => {
     dispatch(startUpdateProduct(active))

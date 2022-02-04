@@ -51,6 +51,8 @@ export const startGoogleLogin = () => {
                     login(user.uid, user.displayName, user.photoURL)
                 )
                 console.log(user);
+            }, error => {
+                console.log(error)
             })
 
     }
