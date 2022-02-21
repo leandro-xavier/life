@@ -49,6 +49,7 @@ export const DashboardScreen = () => {
                 </div>
                     </Offcanvas.Body>
             </Offcanvas>
+
         </div>
     )
 }

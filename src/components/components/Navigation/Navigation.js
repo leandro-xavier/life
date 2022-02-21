@@ -13,6 +13,7 @@ export const Navigation = () => {
                     <Nav className="me-auto">
                       <Nav.Link as={Link} to="/">explore</Nav.Link>
                       <Nav.Link as={Link} to="/dashboard">Dashboard</Nav.Link>
+                      <Nav.Link as={Link} to="/chat">Chat</Nav.Link>
                     </Nav>
                     <Nav>
                       <Nav.Link as={Link} to="/auth/login">Login</Nav.Link>

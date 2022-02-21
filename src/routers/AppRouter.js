@@ -14,6 +14,7 @@ import { LoginScreen } from '../components/screens/auth/login/LoginScreen';
 import { RegisterScreen } from '../components/screens/auth/register/RegisterScreen';
 import { PrivateRoute } from './PrivateRoute';
 import { startLoadingAllProducts, startLoadingProducts } from '../actions/product';
+import { Chat } from '../components/screens/chat/Chat';
 
 
 export const AppRouter = () => {
@@ -59,6 +60,7 @@ export const AppRouter = () => {
                     
                     <PrivateRoute exact isAuthenticated={isLoggedIn} path="/dashboard" component={DashboardScreen}/>
                     <PrivateRoute exact isAuthenticated={isLoggedIn} path="/" component={AllPicture} />
+                    <PrivateRoute exact isAuthenticated={isLoggedIn} path="/chat" component={Chat} />
 
                     <Redirect to="/auth/login"/>
                 </Switch>
